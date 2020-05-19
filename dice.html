@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--Alex Westcott 09.23.2019-->
+	<head>
+		<meta charset="utf-8">
+		<title>Dice</title>
+		<style>
+			#scores{
+				text-align: right;
+			}
+			textarea{
+				resize: none;
+			}
+		</style>
+		
+		<script type="text/javascript">
+			//constants
+			var WINNING_SCORE = 100;
+			
+			//vars
+			var myDice = 0, myScore = 0, roundCount = 1, compDice = 0, compScore = 0;
+			
+			function playRound(){
+				compPlayRound();
+				var dieVal = 0, myRoundScore = 0, rolledOne = false;
+				myDice = document.getElementById("numOfDice").value;
+				for(var i=1; i<=myDice; i++){
+					dieVal = Math.floor(1 + Math.random() * 6);
+					document.getElementById("playerArea").value += "\nDie #" +i+ " rolled: " + dieVal;
+					if(dieVal == 1){
+						rolledOne = true;
+					}else{
+						myRoundScore += dieVal;
+					}
+				}
+				if(rolledOne)
+					myRoundScore = 0;
+				myScore += myRoundScore;
+				
+				document.getElementById("playerArea").value += "\nRound total: " + myRoundScore + "\nTotal score: "+myScore+"\n\n---Round "+roundCount+"---";
+				var titleChange = document.getElementById("roundCountTitle");
+				titleChange.innerHTML = "Round #"+roundCount;
+				
+				titleChange = document.getElementById("yourScoreTitle");
+				titleChange.innerHTML = "Your score: "+myScore;
+				checkScores();
+			}
+			
+			function compPlayRound(){
+				roundCount++;
+				var dieVal = 0, myRoundScore = 0, rolledOne = false;
+				compDice = Math.floor(1 + Math.random() * 10); //generates random num of dice between 1 and 10
+				for(var i=1; i<=compDice; i++){
+					dieVal = Math.floor(1 + Math.random() * 6);
+					document.getElementById("compArea").value += "\nDie #" +i+ " rolled: " + dieVal;
+					if(dieVal == 1){
+						rolledOne = true;
+					}else{
+						myRoundScore += dieVal;
+					}
+				}
+				if(rolledOne)
+					myRoundScore = 0;
+				compScore += myRoundScore;
+				
+				document.getElementById("compArea").value += "\nRound total: " + myRoundScore + "\nTotal score: "+compScore+"\n\n---Round "+roundCount+"---";
+				
+				titleChange = document.getElementById("compScoreTitle");
+				titleChange.innerHTML = "Computer score: "+compScore;
+					
+			}
+			
+			function checkScores(){
+				if(myScore >= WINNING_SCORE && compScore >= WINNING_SCORE){
+					document.getElementById("compArea").value = "It's a tie!";
+					document.getElementById("playerArea").value = "It's a tie!";
+					document.getElementById("rollDice").disabled = true;
+				}else if(myScore >= WINNING_SCORE){
+					document.getElementById("playerArea").value = "YOU WIN!";
+					document.getElementById("rollDice").disabled = true;
+				}else if(compScore >= WINNING_SCORE){
+					document.getElementById("compArea").value = "The computer wins!";
+					document.getElementById("rollDice").disabled = true;
+				}
+			}
+			
+			function resetGame(){
+				myScore = 0;
+				roundCount = 1;
+				compScore = 0;
+				document.getElementById("compArea").value = "---Round 1---";
+				document.getElementById("playerArea").value = "---Round 1---";
+				document.getElementById("numOfDice").value = "";
+				var titleChange = document.getElementById("roundCountTitle");
+				titleChange.innerHTML = "Round #"+roundCount;
+				
+				titleChange = document.getElementById("yourScoreTitle");
+				titleChange.innerHTML = "Your score: "+myScore;
+				
+				titleChange = document.getElementById("compScoreTitle");
+				titleChange.innerHTML = "Computer score: "+compScore;
+				document.getElementById("rollDice").disabled = false;
+			}
+		</script>
+		
+	</head>
+	<body>
+		<h1><em>HOG Dice Game</em></h1>
+		<td><h2 id="roundCountTitle">Round #1</h2></td>
+		<div id="scores"><h4 id="yourScoreTitle">Your score: 0</h4>
+		<h4 id="compScoreTitle">Computer score: 0</h4></div>
+		
+		<!--NEW STUFF-->
+		Choose the number of dice to roll for each round. If you do not roll a 1 on any of the dice, all the rolls are added to your score on the right.
+		</br>If you roll a 1, your score for that round is zero.
+		</br>Winner is the first to reach 100.
+		
+		<table>
+			<tr>
+				<td><h3>Number of dice to roll: </h3></td>
+				<td><input id="numOfDice" type="number" /></td>
+			</tr>
+			
+			<tr>
+				<td><input id="rollDice" value="Roll" type="button" onclick="playRound()" /></td>
+			</tr>
+			
+			<tr>
+				<td><h3>Player</h3></td>
+				<td><h3>Computer</h3></td>
+			</tr>
+			
+			<tr>
+				<td><textarea readonly name="playerArea" id="playerArea" rows="10" cols="25">---Round 1---</textarea></td>
+				<td><textarea readonly name="compArea" id="compArea" rows="10" cols="25">---Round 1---</textarea></td>
+			</tr>
+			
+			<tr>
+				<td><input type="button" value="Reset" onclick="resetGame()" /></td>
+			</tr>
+		</table>
+	</body>
+</html>
