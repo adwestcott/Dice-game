@@ -3,14 +3,33 @@
 <!--Alex Westcott 09.23.2019-->
 	<head>
 		<meta charset="utf-8">
-		<title>Dice</title>
+		<title>Dice Game</title>
 		<style>
 			#scores{
-				text-align: right;
+				text-align: left;
+				top-border: solid;
+				padding-left: 15px;
+			}
+			#top-banner{
+				background-color: lightblue;
+				border-top: solid;
+				border-bottom: solid;
+				padding-left: 10px;
+			}
+			#instructions{
+				padding: 5px;
+			}
+			#game-board{
+				background-color: #FFF8DC;
+			}
+			body{
+				background-color: #FFF8DC;
+				border: solid;
 			}
 			textarea{
 				resize: none;
 			}
+			
 		</style>
 		
 		<script type="text/javascript">
@@ -105,39 +124,49 @@
 		
 	</head>
 	<body>
-		<h1><em>HOG Dice Game</em></h1>
-		<td><h2 id="roundCountTitle">Round #1</h2></td>
-		<div id="scores"><h4 id="yourScoreTitle">Your score: 0</h4>
-		<h4 id="compScoreTitle">Computer score: 0</h4></div>
+		<div id="top-banner">
+			<h1><em>HOG Dice Game</em></h1>
+			<td><h2 id="roundCountTitle">Round #1</h2></td>
+		</div>
 		
-		<!--NEW STUFF-->
-		Choose the number of dice to roll for each round. If you do not roll a 1 on any of the dice, all the rolls are added to your score on the right.
-		</br>If you roll a 1, your score for that round is zero.
-		</br>Winner is the first to reach 100.
-		
-		<table>
-			<tr>
-				<td><h3>Number of dice to roll: </h3></td>
-				<td><input id="numOfDice" type="number" /></td>
-			</tr>
+		<div id="game-board">
+			<div id="scores">
+				<h4 id="yourScoreTitle">Your score: 0</h4>
+				<h4 id="compScoreTitle">Computer score: 0</h4>
+			</div>
 			
-			<tr>
-				<td><input id="rollDice" value="Roll" type="button" onclick="playRound()" /></td>
-			</tr>
 			
-			<tr>
-				<td><h3>Player</h3></td>
-				<td><h3>Computer</h3></td>
-			</tr>
 			
-			<tr>
-				<td><textarea readonly name="playerArea" id="playerArea" rows="10" cols="25">---Round 1---</textarea></td>
-				<td><textarea readonly name="compArea" id="compArea" rows="10" cols="25">---Round 1---</textarea></td>
-			</tr>
+			<div id=instructions>
+				Choose the number of dice to roll for each round. If you do not roll a 1 on any of the dice, all the rolls are added to your score.
+				</br>If you roll a 1, your score for that round is zero.
+				</br></br>Winner is the first to reach 100.
+			</div>
 			
-			<tr>
-				<td><input type="button" value="Reset" onclick="resetGame()" /></td>
-			</tr>
-		</table>
+			<table>
+				<tr>
+					<td><h3>Number of dice to roll: </h3></td>
+					<td><input id="numOfDice" type="number" /></td>
+				</tr>
+				
+				<tr>
+					<td><input id="rollDice" value="Roll" type="button" onclick="playRound()" /></td>
+				</tr>
+				
+				<tr>
+					<td><h3>Player</h3></td>
+					<td><h3>Computer</h3></td>
+				</tr>
+				
+				<tr>
+					<td><textarea readonly name="playerArea" id="playerArea" rows="10" cols="25">---Round 1---</textarea></td>
+					<td><textarea readonly name="compArea" id="compArea" rows="10" cols="25">---Round 1---</textarea></td>
+				</tr>
+				
+				<tr>
+					<td><input type="button" value="Reset" onclick="resetGame()" /></td>
+				</tr>
+			</table>
+		</div>
 	</body>
 </html>
